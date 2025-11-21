@@ -9,11 +9,9 @@
 	<meta charset="UTF-8">
 	<title>Todo List</title>
 	<link rel="stylesheet" href="/resources/css/main.css">
-	
 </head>
 <body>
 	
-
 	<h1>Todo List</h1>
 	
 	<h3>전체 Todo 개수 : ${fn:length(todoList)}개 / 
@@ -55,36 +53,42 @@
 					<th>${vs.count}</th>
 					<th>${todo.todoNo}</th>
 					<td>
-					<a href="#">${todo.todoTitle}</a>
+						<%-- 제목 클릭 시 
+						todoNo(고유 todo번호)를 데이터로 전송(제출)하여
+						서버에서 상세내용 조회시 todoNo를 이용하게끔 함
+						 --%>
+						<a href="/todo/detail?todoNo=${todo.todoNo}">${todo.todoTitle}</a>
 					</td>
 					<th>
 						<c:if test="${todo.todoComplete}">O</c:if>
-						<%-- todo의 todoComplete가 treu라면 O 출력 --%>
-
+						<%-- todo의 todoComplete가 true 라면 O 출력 --%>
+						
 						<c:if test="${not todo.todoComplete}">X</c:if>
-						<%-- todo의 todoComplete가 treu 아니라면 X 출력 --%>
+						<%-- todo의 todoComplete가 true 아니라면 X 출력 --%>
 					</th>
 					<td>${todo.regDate}</td>
 				</tr>
-			
 			</c:forEach>
-		
 		</tbody>
 	</table>
 	
-	<%-- session 범위에 message가 있는 경우 --%>	
+	
+	<%-- session 범위에 message 가 있는 경우 --%>
 	<c:if test="${not empty sessionScope.message}">
 		<script>
-			//JS 영역
+			// JS 영역
 			alert("${message}");
-			//JSP 해석 순위
-			//1순위:Java(EL/JSTL)
-			//2순위:Front(HTML/CSS/JS)
+			// JSP 해석 순위
+			// 1순위 : Java(EL/JSTL)
+			// 2순위 : Front(HTML/CSS/JS)
 		</script>
 		
-		<%-- message를 한번만 사용하고 제거 --%>
-		<c:remove var="message" scope="session"/>
+		<%-- message를 한 번만 사용하고 제거 --%>
+		<c:remove var="message" scope="session" />
 	</c:if>
+	
+	<%-- js 연결 --%>
+	<script src="/resources/js/main.js"></script>
 	
 	
 </body>
